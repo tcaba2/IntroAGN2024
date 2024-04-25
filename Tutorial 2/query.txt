@@ -1,0 +1,19 @@
+SELECT s.plate, s.mjd, s.fiberid, s.z, g.subclass, g.e_bv_sfd, 
+l.h_alpha_flux, l.h_beta_flux, l.oiii_5007_flux, l.nii_6584_flux,
+w.w1mpro, w.w2mpro, w.w3mpro
+FROM SpecObjAll AS s 
+JOIN GalSpecInfo AS g ON s.specobjid = g.specobjid 
+JOIN GalSpecLine AS l ON s.specobjid = l.specobjid	
+JOIN wise_xmatch AS x ON s.bestobjid = x.sdss_objid
+JOIN wise_allsky AS w ON x.wise_cntr = w.cntr
+WHERE (s.class = "QSO" OR s.class = "GALAXY")
+AND s.snmedian_g > 40
+AND l.h_alpha_flux > 5
+AND l.h_alpha_flux/l.h_alpha_flux_err > 5
+AND l.h_beta_flux > 5
+AND l.h_beta_flux/l.h_beta_flux_err > 5
+AND l.oiii_5007_flux > 5
+AND l.oiii_5007_flux/l.oiii_5007_flux_err > 5
+AND l.nii_6584_flux > 5
+AND l.nii_6584_flux/l.nii_6584_flux_err > 5
+AND (l.sigma_balmer * 2.355) < 500
