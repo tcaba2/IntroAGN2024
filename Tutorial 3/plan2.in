@@ -1,0 +1,8 @@
+blackbody, T=1e5 K # the continuum shape
+luminosity total 38    # the luminosity, log erg s-1
+radius 18 # the log of the inner radius in cm
+hden 5    # the log of the hydrogen density cm-3
+sphere
+#abundances planetary nebula
+save overview "pn.ovr"
+save continuum "pn.con" units microns
