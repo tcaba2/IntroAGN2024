@@ -1,0 +1,1 @@
+SELECT s.plate, s.mjd, s.fiberid, s.z, g.subclass, g.e_bv_sfd, l.h_beta_flux, l.sigma_balmer	FROM SpecObjAll AS s JOIN GalSpecInfo AS g ON s.specobjid = g.specobjid JOIN GalSpecLine AS l ON s.specobjid = l.specobjid	WHERE s.class = "QSO" and s.z < 0.5 and h_beta_flux <> 0
