@@ -1,0 +1,37 @@
+SELECT TOP 30000
+s.plate, s.mjd, s.fiberid, s.z, g.subclass, g.e_bv_sfd,
+l.h_alpha_flux, l.h_beta_flux, l.oiii_5007_flux, l.nii_6584_flux,
+l.oi_6300_flux, l.sii_6717_flux, l.sii_6731_flux,
+l.neiii_3869_flux, l.oii_3726_flux, l.oii_3729_flux,
+l.h_alpha_eqw, l.nii_6584_eqw,
+p.psfMag_g, p.psfMag_z
+FROM SpecObjAll AS s 
+JOIN GalSpecInfo AS g ON s.specobjid = g.specobjid 
+JOIN GalSpecLine AS l ON s.specobjid = l.specobjid
+JOIN PhotoObjAll as p on s.bestobjid = p.objid
+WHERE (s.class = "QSO" OR s.class = "GALAXY")
+AND s.z < 0.35
+AND s.snmedian_g > 5
+AND (l.sigma_balmer * 2.355) < 500
+AND l.h_alpha_flux > 0
+AND l.h_beta_flux > 0
+AND l.oiii_5007_flux > 0
+AND l.nii_6584_flux > 0
+AND l.oi_6300_flux > 0
+AND l.sii_6717_flux > 0
+AND l.sii_6731_flux > 0
+AND l.neiii_3869_flux > 0
+AND l.oii_3726_flux > 0
+AND l.oii_3729_flux > 0
+AND l.h_alpha_flux/l.h_alpha_flux_err > 5
+AND l.h_beta_flux/l.h_beta_flux_err > 5
+AND l.oiii_5007_flux/l.oiii_5007_flux_err > 5
+AND l.nii_6584_flux/l.nii_6584_flux_err > 5
+AND l.oi_6300_flux/l.oi_6300_flux_err > 5
+AND l.sii_6717_flux/l.sii_6717_flux_err > 5
+AND l.sii_6731_flux/l.sii_6731_flux_err > 5
+AND l.neiii_3869_flux/l.neiii_3869_flux_err > 5
+AND l.oii_3726_flux/l.oii_3726_flux_err > 5
+AND l.oii_3729_flux/l.oii_3729_flux_err > 5
+AND p.psfMag_g/p.psfMagErr_g > 5
+AND p.psfMag_z/p.psfMagErr_z > 5

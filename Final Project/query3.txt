@@ -1,0 +1,18 @@
+SELECT
+s.plate, s.mjd, s.fiberid, s.z, g.subclass, g.e_bv_sfd,
+w.w1mpro, w.w2mpro, w.w3mpro, w.w1flux, w.w2flux, w.w3flux
+FROM SpecObjAll AS s
+JOIN GalSpecInfo AS g ON s.specobjid = g.specobjid 
+JOIN GalSpecLine AS l ON s.specobjid = l.specobjid	
+JOIN wise_xmatch AS x ON s.bestobjid = x.sdss_objid
+JOIN wise_allsky AS w ON x.wise_cntr = w.cntr
+WHERE (s.class = "QSO" OR s.class = "GALAXY")
+AND s.z < 0.35
+AND (l.sigma_balmer * 2.355) < 500
+AND x.match_dist <= 3
+AND w.w1snr > 5
+AND w.w2snr > 5
+AND w.w3snr > 5
+AND w.w1flux/w.w1sigflux > 5
+AND w.w2flux/w.w2sigflux > 5
+AND w.w3flux/w.w3sigflux > 5
